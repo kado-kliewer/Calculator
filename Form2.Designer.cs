@@ -41,7 +41,8 @@
             "+ = Addition",
             "Return or Enter = the Equal sign aka the key that will trigger the calculation",
             "NOTE: If you click a key with your mouse then the enter and return key bind will " +
-                "not work"});
+                "not work,",
+            "You can also reclick the equals button to reinstate functionality"});
             this.listBox1.Location = new System.Drawing.Point(12, 12);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(427, 251);

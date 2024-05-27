@@ -24,8 +24,6 @@ namespace Calculator
             buttons = new ButtonClicks();
             value1 = new Value1(double.NaN);
             value2 = new Value2(double.NaN);
-            this.KeyPress += Form1_KeyPress;
-            this.KeyUp += Form1_KeyUp;
             this.AcceptButton = button12;
             button1.TabStop = false;
             button2.TabStop = false;
@@ -225,18 +223,29 @@ namespace Calculator
                     if ((bool)buttons.IsSubtraction)
                     {
                         value = value1.Value - value2.Value;
+                        buttons.Reset();
                     }
                     else if ((bool)buttons.IsMultiplication)
                     {
                         value = value1.Value * value2.Value;
+                        buttons.Reset();
                     }
                     else if ((bool)buttons.IsDivision)
                     {
-                        value = value1.Value / value2.Value;
+                        if(value2.Value != 0)
+                        {
+                            value = value1.Value / value2.Value;
+                        }
+                        else
+                        {
+                            throw new Exception("Division by 0 is not allowed");
+                        }
+                        buttons.Reset();
                     }
                     else if ((bool)buttons.IsAddition)
                     {
                         value = value1.Value + value2.Value;
+                        buttons.Reset();
                     }
 
                     value1.Value = value;
@@ -330,6 +339,14 @@ namespace Calculator
             {
                 clearEntry_Click(sender, e);
             }
+            else if(e.KeyCode == Keys.Multiply)
+            {
+                multiplyButton_Click(sender, e);
+            }
+            else if(e.KeyCode== Keys.Divide)
+            {
+                divideButton_Click(sender, e);
+            }
         }
 
         // Clearing and function logic
@@ -346,41 +363,6 @@ namespace Calculator
             {
                 value2.Value = double.NaN;
                 displayValue.Text = value1.Value.ToString();
-            }
-        }
-
-        // Tracking to see if the key has been handled
-        private bool _isAsteriskHandled = false;
-        private bool _IsDivideHandled = false;
-
-        // Reference: https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.keypresseventargs.keychar?view=windowsdesktop-8.0
-        // Refetence: https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.keys?view=windowsdesktop-8.0
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == '*' && !_isAsteriskHandled)
-            {
-                _isAsteriskHandled = true;
-                multiplyButton_Click(sender, e);
-                e.Handled = true;
-            }
-
-            if(e.KeyChar == '/' && !_IsDivideHandled)
-            {
-                _IsDivideHandled = true;
-                divideButton_Click(sender, e);
-            }
-        }
-
-        private void Form1_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Shift || e.KeyCode == Keys.D8)
-            {
-                _isAsteriskHandled = false;
-            }
-
-            if(e.KeyCode == Keys.Shift || e.KeyCode == Keys.OemQuestion)
-            {
-                _IsDivideHandled = false;
             }
         }
 

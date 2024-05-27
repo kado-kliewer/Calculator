@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace Calculator
 {
+    /// <summary>
+    ///  A boolean class of mathematical operators
+    /// </summary>
     public class ButtonClicks
     {
         public bool? IsAddition { get; set; } = false;
@@ -17,6 +20,9 @@ namespace Calculator
 
         public bool? IsDivision { get; set; } = false;
 
+        /// <summary>
+        ///  Checks to see which operation we will be performing
+        /// </summary>
         public void Check()
         {
             if((bool)IsAddition)
@@ -43,6 +49,17 @@ namespace Calculator
                 IsDivision = false;
                 IsSubtraction = false;
             }
+        }
+
+        /// <summary>
+        ///  Resets the chosen operation to ensure that calculations are correct.
+        /// </summary>
+        public void Reset()
+        {
+            IsAddition = false;
+            IsSubtraction = false;
+            IsDivision = false;
+            IsMultiplication = false;
         }
     }
 }
