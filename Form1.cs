@@ -24,7 +24,7 @@ namespace Calculator
             buttons = new ButtonClicks();
             value1 = new Value1(double.NaN);
             value2 = new Value2(double.NaN);
-            this.AcceptButton = button12;
+            this.AcceptButton = equalButton;
             button1.TabStop = false;
             button2.TabStop = false;
             button3.TabStop = false;
@@ -34,9 +34,9 @@ namespace Calculator
             button7.TabStop = false;
             button8.TabStop = false;
             button9.TabStop = false;
-            button10.TabStop = false;
+            decimalButton.TabStop = false;
             button11.TabStop = false;
-            button12.TabStop = false;
+            equalButton.TabStop = false;
             plusButton.TabStop = false;
             minusButton.TabStop = false;
             multiplyButton.TabStop = false;
@@ -115,7 +115,7 @@ namespace Calculator
             displayValue.Text += "9";
         }
 
-        private void button10_Click(object sender, EventArgs e)
+        private void decimalButton_Click(object sender, EventArgs e)
         {
             displayValue.Text += ".";
         }
@@ -137,6 +137,7 @@ namespace Calculator
             else
             {
                 value1.Value = Convert.ToDouble(displayValue.Text);
+                previousValueLabel.Text = value1.Value.ToString();
                 buttons.IsAddition = true;
                 displayValue.Text = string.Empty;
                 buttons.Check();
@@ -154,6 +155,7 @@ namespace Calculator
             else
             {
                 value1.Value = Convert.ToDouble(displayValue.Text);
+                previousValueLabel.Text = value1.Value.ToString();
                 buttons.IsSubtraction = true;
                 displayValue.Text = string.Empty;
                 buttons.Check();
@@ -172,6 +174,7 @@ namespace Calculator
             {
                 buttons.IsMultiplication = true;
                 value1.Value = Convert.ToDouble(displayValue.Text);
+                previousValueLabel.Text = value1.Value.ToString();
                 displayValue.Text = string.Empty;
                 buttons.Check();
             }
@@ -188,13 +191,14 @@ namespace Calculator
             else
             {
                 value1.Value = Convert.ToDouble(displayValue.Text);
+                previousValueLabel.Text = value1.Value.ToString();
                 buttons.IsDivision = true;
                 displayValue.Text = string.Empty;
                 buttons.Check();
             }
         }
 
-        private void button12_Click(object sender, EventArgs e)
+        private void equalButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -222,11 +226,13 @@ namespace Calculator
                 {
                     if ((bool)buttons.IsSubtraction)
                     {
+                        previousValueLabel.Text = value1.Value.ToString() + " - " + value2.Value.ToString();
                         value = value1.Value - value2.Value;
                         buttons.Reset();
                     }
                     else if ((bool)buttons.IsMultiplication)
                     {
+                        previousValueLabel.Text = value1.Value.ToString() + " * " + value2.Value.ToString();
                         value = value1.Value * value2.Value;
                         buttons.Reset();
                     }
@@ -234,6 +240,7 @@ namespace Calculator
                     {
                         if(value2.Value != 0)
                         {
+                            previousValueLabel.Text = value1.Value.ToString() + " / " + value2.Value.ToString();
                             value = value1.Value / value2.Value;
                         }
                         else
@@ -244,12 +251,14 @@ namespace Calculator
                     }
                     else if ((bool)buttons.IsAddition)
                     {
+                        previousValueLabel.Text = value1.Value.ToString() + " + " + value2.Value.ToString();
                         value = value1.Value + value2.Value;
                         buttons.Reset();
                     }
 
                     value1.Value = value;
-                    displayValue.Text = value.ToString();
+                    displayValue.Text = value1.Value.ToString();
+                    value2.Value = double.NaN;
                 }
             }
             catch (Exception ex)
@@ -266,7 +275,7 @@ namespace Calculator
 
             if(e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
             {
-                button12_Click(sender, e);
+                equalButton_Click(sender, e);
             }
             else if (e.KeyCode == Keys.NumPad1 || e.KeyCode == Keys.D1)
             {
@@ -346,6 +355,10 @@ namespace Calculator
             else if(e.KeyCode== Keys.Divide)
             {
                 divideButton_Click(sender, e);
+            } 
+            else if(e.KeyCode == Keys.Decimal)
+            {
+                decimalButton_Click(sender, e);
             }
         }
 
@@ -366,10 +379,11 @@ namespace Calculator
             }
         }
 
-        private Form2 form2;
+        // Key Binds form
+        private KeyBinds form2;
         private void keyBindsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            form2 = new Form2();
+            form2 = new KeyBinds();
             form2.Show();
         }
     }

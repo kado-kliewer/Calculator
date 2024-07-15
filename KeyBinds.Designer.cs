@@ -1,6 +1,6 @@
 ﻿namespace Calculator
 {
-    partial class Form2
+    partial class KeyBinds
     {
         /// <summary>
         /// Required designer variable.

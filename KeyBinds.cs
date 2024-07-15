@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Calculator
 {
-    public partial class Form2 : Form
+    public partial class KeyBinds : Form
     {
-        public Form2()
+        public KeyBinds()
         {
             InitializeComponent();
         }
